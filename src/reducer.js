@@ -6,6 +6,6 @@ export default function reducer(state = {}, action) {
     case 'COMPLETE_WORK':
       return describeFibers(action.fiberRoot);
     default:
-      return state;
+      return describeFibers(state);
   }
 }

@@ -7,11 +7,12 @@ import App from './App';
 import reducer from './reducer';
 import './index.css';
 
+let fiberRoot;
 const store = createStore(
   reducer,
+  fiberRoot,
   window.__REDUX_DEVTOOLS_EXTENSION__  && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
-let fiberRoot;
 
 const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
