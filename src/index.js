@@ -7,7 +7,10 @@ import App from './App';
 import reducer from './reducer';
 import './index.css';
 
-const store = createStore(reducer);
+const store = createStore(
+  reducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__  && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 let fiberRoot;
 
 const ReactDebugNoop = ReactNoop.create({
@@ -37,5 +40,12 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-ReactDebugNoop.render(<App />);
+const HelloWorld = () => (
+  [
+    <h1>Hello</h1>,
+    <h1>World</h1>,
+  ]
+)
+
+ReactDebugNoop.render(<HelloWorld/>);
 ReactDebugNoop.flush();

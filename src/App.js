@@ -17,8 +17,6 @@ function App({ fibers }) {
 }
 
 function mapStateToProps(state) {
-  console.log('in mstp');
-  console.log(state);
   return {
     fibers: state,
   };
