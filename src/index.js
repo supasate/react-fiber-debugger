@@ -14,4 +14,4 @@ ReactDOM.render(
 ReactNoop.render(<App />);
 ReactNoop.flush();
 
-console.log(ReactNoop.dumpTree());
+console.log(ReactNoop.root);
