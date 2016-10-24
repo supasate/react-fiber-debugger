@@ -8,7 +8,15 @@ let fiberRoot;
 const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
     fiberRoot = root;
-  }
+  },
+
+  onBeginWork() {
+    console.log('--- began work');
+  },
+
+  onCompleteWork() {
+    console.log('--- completed work');
+  },
 })
 
 ReactDOM.render(
