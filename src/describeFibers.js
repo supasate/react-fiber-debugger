@@ -25,6 +25,7 @@ export default function describeFibers(rootFiber) {
       ...fiber,
       type: fiber.type && fiber.type.name,
       stateNode: `[${typeof fiber.stateNode}]`,
+      output: `[${typeof fiber.output}]`,
       return: acknowledgeFiber(fiber.return),
       child: acknowledgeFiber(fiber.child),
       sibling: acknowledgeFiber(fiber.sibling),
