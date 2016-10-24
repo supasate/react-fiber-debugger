@@ -1,22 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom/fiber';
+import ReactDOM from 'react-dom';
 import ReactNoop from 'react-dom/fiber-noop';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 import App from './App';
-import describeFibers from './describeFibers'
-import prettyFormat from 'pretty-format';
-import reactElementPlugin from 'pretty-format/plugins/ReactElement';
+import reducer from './reducer';
 import './index.css';
 
+const store = createStore(reducer);
 let fiberRoot;
-
-function formatFibers() {
-  return prettyFormat(
-    describeFibers(fiberRoot),
-    {
-      plugins: [reactElementPlugin]
-    }
-  )
-}
 
 const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
@@ -24,18 +16,24 @@ const ReactDebugNoop = ReactNoop.create({
   },
 
   onBeginWork() {
-    console.log('--- began work');
-    console.log(formatFibers());
+    store.dispatch({
+      type: 'BEGIN_WORK',
+      fiberRoot,
+    });
   },
 
   onCompleteWork() {
-    console.log('--- completed work');
-    console.log(formatFibers());
+    store.dispatch({
+      type: 'COMPLETE_WORK',
+      fiberRoot,
+    });
   },
-})
+});
 
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );
 

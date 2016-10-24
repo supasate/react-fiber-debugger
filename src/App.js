@@ -1,12 +1,27 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import prettyFormat from 'pretty-format';
+import reactElementPlugin from 'pretty-format/plugins/ReactElement';
 
-
-class App extends Component {
-  render() {
-    return (
-      <h1>Hello</h1>
-    );
-  }
+function App({ fibers }) {
+  return (
+    <pre>
+      {prettyFormat(
+        fibers,
+        {
+          plugins: [reactElementPlugin]
+        }
+      )}
+    </pre>
+  );
 }
 
-export default App;
+function mapStateToProps(state) {
+  console.log('in mstp');
+  console.log(state);
+  return {
+    fibers: state,
+  };
+}
+
+export default connect(mapStateToProps)(App);
