@@ -22,7 +22,9 @@ export default function describeFibers(rootFiber) {
     descriptions[id] = {};
 
     Object.assign(descriptions[id], {
+      ...fiber,
       type: fiber.type && fiber.type.name,
+      stateNode: `[${typeof fiber.stateNode}]`,
       return: acknowledgeFiber(fiber.return),
       child: acknowledgeFiber(fiber.child),
       sibling: acknowledgeFiber(fiber.sibling),
