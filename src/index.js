@@ -3,9 +3,21 @@ import ReactDOM from 'react-dom/fiber';
 import ReactNoop from 'react-dom/fiber-noop';
 import App from './App';
 import describeFibers from './describeFibers'
+import prettyFormat from 'pretty-format';
+import reactElementPlugin from 'pretty-format/plugins/ReactElement';
 import './index.css';
 
 let fiberRoot;
+
+function formatFibers() {
+  return prettyFormat(
+    describeFibers(fiberRoot),
+    {
+      plugins: [reactElementPlugin]
+    }
+  )
+}
+
 const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
     fiberRoot = root.current;
@@ -13,12 +25,12 @@ const ReactDebugNoop = ReactNoop.create({
 
   onBeginWork() {
     console.log('--- began work');
-    console.log(JSON.stringify(describeFibers(fiberRoot), null, 2));
+    console.log(formatFibers());
   },
 
   onCompleteWork() {
     console.log('--- completed work');
-    console.log(JSON.stringify(describeFibers(fiberRoot), null, 2));
+    console.log(formatFibers());
   },
 })
 
