@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/fiber';
-import createNoopRenderer from 'react-dom/fiber-noop';
+import ReactNoop from 'react-dom/fiber-noop';
 import App from './App';
 import './index.css';
 
 let fiberRoot;
-const ReactNoop = createNoopRenderer({
+const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
     fiberRoot = root;
   }
@@ -16,7 +16,7 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-ReactNoop.render(<App />);
-ReactNoop.flush();
+ReactDebugNoop.render(<App />);
+ReactDebugNoop.flush();
 
 console.log(fiberRoot);
