@@ -7,7 +7,7 @@ import './index.css';
 let fiberRoot;
 const ReactDebugNoop = ReactNoop.create({
   onMountContainer(root) {
-    fiberRoot = root;
+    fiberRoot = root.current;
   },
 
   onBeginWork() {
