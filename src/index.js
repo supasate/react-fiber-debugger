@@ -10,3 +10,8 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+ReactNoop.render(<App />);
+ReactNoop.flush();
+
+console.log(ReactNoop.dumpTree());
