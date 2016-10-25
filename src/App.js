@@ -4,16 +4,11 @@ import prettyFormat from 'pretty-format';
 import reactElementPlugin from 'pretty-format/plugins/ReactElement';
 import describeFibers from './describeFibers';
 
-function getState(root) {
+function getFiberState(root) {
   if (!root) {
-    return {
-      isMounted: false,
-    };
+    return null
   }
-  return {
-    isMounted: true,
-    ...describeFibers(root.current)
-  }
+  return describeFibers(root.current);
 }
 
 class App extends Component {
@@ -24,15 +19,40 @@ class App extends Component {
         this.root = root;
       },
 
+      onUpdateContainer: (root) => {
+        this.root = root;
+      },
+
       onBeginWork: () => {
-        this.setState(getState(this.root))
+        const fibers = getFiberState(this.root);
+        this.setState(({ history }) => ({
+          history: [
+            ...history,
+            {
+              action: 'beginWork',
+              fibers,
+            }
+          ]
+        }));
       },
 
       onCompleteWork: () => {
-        this.setState(getState(this.root))
+        const fibers = getFiberState(this.root);
+        this.setState(({ history }) => ({
+          history: [
+            ...history,
+            {
+              action: 'completeWork',
+              fibers,
+            }
+          ]
+        }));
       },
     });
-    this.state = getState(this.root);
+    this.state = {
+      history: [],
+      currentStep: 0
+    };
   }
 
   componentDidMount() {
@@ -40,15 +60,31 @@ class App extends Component {
   }
 
   render() {
+    const { history, currentStep } = this.state;
+
     return (
-      <pre>
-        {prettyFormat(
-          this.state,
-          {
-            plugins: [reactElementPlugin]
+      <div>
+        <input
+          type="range"
+          min={0}
+          max={history.length - 1}
+          value={currentStep}
+          onChange={e =>
+            this.setState({
+              currentStep: Number(e.target.value)
+            })
           }
-        )}
-      </pre>
+        />
+        <p>Step #{currentStep}</p>
+        <pre>
+          {prettyFormat(
+            history[currentStep],
+            {
+              plugins: [reactElementPlugin]
+            }
+          )}
+        </pre>
+      </div>
     );
   }
 }

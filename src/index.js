@@ -8,6 +8,8 @@ ReactDOM.render(
   <App render={renderer => {
     renderer.render(<Target />);
     renderer.flush();
+    renderer.render(<Target wat />);
+    renderer.flush();
   }} />,
   document.getElementById('root')
 );
