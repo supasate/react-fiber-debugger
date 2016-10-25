@@ -7,29 +7,29 @@ import App from './App';
 import reducer from './reducer';
 import './index.css';
 
-let fiberRoot;
+let root;
 const store = createStore(
   reducer,
-  fiberRoot,
+  root,
   window.__REDUX_DEVTOOLS_EXTENSION__  && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
 const ReactDebugNoop = ReactNoop.create({
-  onMountContainer(root) {
-    fiberRoot = root.current;
+  onMountContainer(r) {
+    root = r;
   },
 
   onBeginWork() {
     store.dispatch({
       type: 'BEGIN_WORK',
-      fiberRoot,
+      fiberRoot: root.current,
     });
   },
 
   onCompleteWork() {
     store.dispatch({
       type: 'COMPLETE_WORK',
-      fiberRoot,
+      fiberRoot: root.current,
     });
   },
 });
