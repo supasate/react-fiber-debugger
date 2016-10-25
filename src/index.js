@@ -4,6 +4,7 @@ import ReactNoop from 'react-dom/fiber-noop';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import App from './App';
+import Target from './Target'
 import reducer from './reducer';
 import './index.css';
 
@@ -41,12 +42,5 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-const HelloWorld = () => (
-  [
-    <h1>Hello</h1>,
-    <h1>World</h1>,
-  ]
-)
-
-ReactDebugNoop.render(<HelloWorld/>);
+ReactDebugNoop.render(<Target/>);
 ReactDebugNoop.flush();
