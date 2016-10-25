@@ -8,6 +8,33 @@ function getFiberUniqueID(fiber) {
   return fiberIDMap.get(fiber);
 }
 
+function getFriendlyTag(tag) {
+  switch (tag) {
+    case 0:
+      return 'IndeterminateComponent';
+    case 1:
+      return 'FunctionalComponent';
+    case 2:
+      return 'ClassComponent';
+    case 3:
+      return 'HostContainer';
+    case 4:
+      return 'HostComponent';
+    case 5:
+      return 'HostText';
+    case 6:
+      return 'CoroutineComponent';
+    case 7:
+      return 'CoroutineHandlerPhase';
+    case 8:
+      return 'YieldComponent';
+    case 9:
+      return 'Fragment';
+    default:
+      throw new Error('Unknown tag');
+  }
+}
+
 export default function describeFibers(rootFiber) {
   let descriptions = {};
 
@@ -24,6 +51,7 @@ export default function describeFibers(rootFiber) {
     Object.assign(descriptions[id], {
       ...fiber,
       type: fiber.type && fiber.type.name,
+      tag: getFriendlyTag(fiber.tag),
       stateNode: `[${typeof fiber.stateNode}]`,
       output: `[${typeof fiber.output}]`,
       return: acknowledgeFiber(fiber.return),

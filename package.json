@@ -8,7 +8,7 @@
   "dependencies": {
     "pretty-format": "^4.2.1",
     "react": "^15.3.2",
-    "react-dom": "^15.3.2",
+    "react-dom": "^15.3.2"
   },
   "scripts": {
     "start": "react-scripts start",

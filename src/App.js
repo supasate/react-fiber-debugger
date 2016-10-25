@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactNoop from 'react-dom/fiber-noop';
 import prettyFormat from 'pretty-format';
 import reactElementPlugin from 'pretty-format/plugins/ReactElement';
+import Fibers from './Fibers'
 import describeFibers from './describeFibers';
 
 function getFiberState(root) {
@@ -61,6 +62,7 @@ class App extends Component {
 
   render() {
     const { history, currentStep } = this.state;
+    const fibers = history[currentStep];
 
     return (
       <div>
@@ -76,6 +78,7 @@ class App extends Component {
           }
         />
         <p>Step #{currentStep}</p>
+        {fibers && <Fibers fibers={fibers} /> }
         <pre>
           {prettyFormat(
             history[currentStep],
