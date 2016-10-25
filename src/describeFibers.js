@@ -50,6 +50,7 @@ export default function describeFibers(rootFiber) {
 
     Object.assign(descriptions[id], {
       ...fiber,
+      id: id,
       type: fiber.type && fiber.type.name,
       tag: getFriendlyTag(fiber.tag),
       stateNode: `[${typeof fiber.stateNode}]`,

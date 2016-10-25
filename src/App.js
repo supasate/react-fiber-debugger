@@ -62,10 +62,10 @@ class App extends Component {
 
   render() {
     const { history, currentStep } = this.state;
-    const fibers = history[currentStep];
+    const { fibers, action } = history[currentStep] || {};
 
     return (
-      <div>
+      <div style={{ height: '100%' }}>
         <input
           type="range"
           min={0}
@@ -77,16 +77,8 @@ class App extends Component {
             })
           }
         />
-        <p>Step #{currentStep}</p>
+        <p>Step #{currentStep}: {action}</p>
         {fibers && <Fibers fibers={fibers} /> }
-        <pre>
-          {prettyFormat(
-            history[currentStep],
-            {
-              plugins: [reactElementPlugin]
-            }
-          )}
-        </pre>
       </div>
     );
   }
